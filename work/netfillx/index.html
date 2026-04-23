@@ -22,25 +22,36 @@
       try {
         localStorage.removeItem("__framer_force_showing_editorbar_since");
       } catch (e) {}
+
       (function removeFramerEditUI() {
+        const selectors = [
+          "#__framer-badge-container",
+          "a.__framer-badge",
+          "a[data-nosnippet='true'][href*='framer.com/edit']",
+          "a[data-nosnippet='true'][href='https://www.framer.com']",
+          "a[data-nosnippet='true'][href='https://framer.com']",
+          "[title*='Create a free website with Framer']"
+        ].join(",");
+
         const strip = () => {
-          const badgeContainer = document.getElementById("__framer-badge-container");
-          if (badgeContainer) badgeContainer.remove();
-          document
-            .querySelectorAll(
-              "a.__framer-badge,a[data-nosnippet='true'][href*='framer.com/edit'],a[data-nosnippet='true'][href='https://www.framer.com'],a[data-nosnippet='true'][href='https://framer.com'],[title*='Create a free website with Framer']"
-            )
-            .forEach((el) => el.remove());
+          document.querySelectorAll(selectors).forEach((el) => el.remove());
           document.querySelectorAll("p").forEach((p) => {
             if (!p.textContent || !p.textContent.includes("Create a free website with Framer")) return;
             const link = p.closest("a");
             if (link) link.remove();
+            else p.remove();
           });
         };
+
         strip();
         document.addEventListener("DOMContentLoaded", strip);
         window.addEventListener("load", strip);
-        setTimeout(strip, 500);
+
+        const observer = new MutationObserver(strip);
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+
+        // Run a few delayed passes in case third-party scripts inject late.
+        [250, 750, 1500, 3000].forEach((ms) => setTimeout(strip, ms));
       })();
     </script>
 
