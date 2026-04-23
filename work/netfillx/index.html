@@ -7,6 +7,42 @@
 
     
     <!-- Start of headStart -->
+    <style id="remove-framer-edit-ui">
+      #__framer-badge-container,
+      .__framer-badge,
+      a[data-nosnippet="true"][href*="framer.com/edit"],
+      a[data-nosnippet="true"][href="https://www.framer.com"],
+      a[data-nosnippet="true"][href="https://framer.com"],
+      [title*="Create a free website with Framer"] {
+        display: none !important;
+        visibility: hidden !important;
+      }
+    </style>
+    <script>
+      try {
+        localStorage.removeItem("__framer_force_showing_editorbar_since");
+      } catch (e) {}
+      (function removeFramerEditUI() {
+        const strip = () => {
+          const badgeContainer = document.getElementById("__framer-badge-container");
+          if (badgeContainer) badgeContainer.remove();
+          document
+            .querySelectorAll(
+              "a.__framer-badge,a[data-nosnippet='true'][href*='framer.com/edit'],a[data-nosnippet='true'][href='https://www.framer.com'],a[data-nosnippet='true'][href='https://framer.com'],[title*='Create a free website with Framer']"
+            )
+            .forEach((el) => el.remove());
+          document.querySelectorAll("p").forEach((p) => {
+            if (!p.textContent || !p.textContent.includes("Create a free website with Framer")) return;
+            const link = p.closest("a");
+            if (link) link.remove();
+          });
+        };
+        strip();
+        document.addEventListener("DOMContentLoaded", strip);
+        window.addEventListener("load", strip);
+        setTimeout(strip, 500);
+      })();
+    </script>
 
     <!-- End of headStart -->
     <meta name="viewport" content="width=device-width" />
@@ -2955,87 +2991,6 @@ I build high-performance, elegant web experiences using React and Next.js. From 
       })();
     </script>
 
-    <div id="__framer-badge-container">
-      <!--$--><!--$--><!--$--><a
-        class="framer-6jWyo framer-n0ccwk framer-v-n0ccwk framer-bmpgw8 __framer-badge"
-        data-framer-appear-id="n0ccwk"
-        data-framer-name="Light"
-        data-nosnippet="true"
-        style="
-          will-change: transform;
-          pointer-events: auto;
-          opacity: 0.001;
-          transform: translateY(10px);
-        "
-        href="https://www.framer.com"
-        rel="noopener"
-        title="Create a free website with Framer, the website builder loved by startups, designers and agencies."
-        ><div
-          class="framer-19yaanm"
-          data-framer-name="Content"
-          style="transform: translate(-50%, -50%)"
-        >
-          <div class="framer-1kflzx5">
-            <div
-              data-framer-name="Logo"
-              class="framer-hcsc7 framer-e50co"
-              style="
-                --1bd4d3i: rgb(0, 0, 0);
-                --otdjsv: rgb(0, 0, 0);
-                transform: translateX(-50%);
-              "
-            ></div>
-          </div>
-          <!--$-->
-          <p style="position: absolute; transform: scale(0.001)">
-            Create a free website with Framer, the website builder loved by
-            startups, designers and agencies.
-          </p>
-          <div
-            data-framer-name="Text"
-            class="framer-g7oZR framer-1um7t9d"
-            style="--1bd4d3i: rgb(0, 0, 0); --otdjsv: rgb(0, 0, 0)"
-          ></div>
-          <!--/$-->
-        </div>
-        <div
-          class="framer-j4ugry"
-          data-framer-name="Bottom"
-          style="
-            mask: linear-gradient(
-                180deg,
-                rgba(0, 0, 0, 0) 65%,
-                rgba(0, 0, 0, 1) 100%
-              )
-              add;
-            -webkit-mask: linear-gradient(
-                180deg,
-                rgba(0, 0, 0, 0) 65%,
-                rgba(0, 0, 0, 1) 100%
-              )
-              add;
-            border-bottom-left-radius: 11px;
-            border-bottom-right-radius: 11px;
-            border-top-left-radius: 11px;
-            border-top-right-radius: 11px;
-            box-shadow: inset 0px 0px 0px 1px rgb(0, 0, 0);
-            opacity: 0.06;
-          "
-        ></div>
-        <div
-          class="framer-jnuwbw"
-          data-framer-name="Border"
-          style="
-            border-bottom-left-radius: 11px;
-            border-bottom-right-radius: 11px;
-            border-top-left-radius: 11px;
-            border-top-right-radius: 11px;
-            box-shadow: inset 0px 0px 0px 1px rgb(0, 0, 0);
-            opacity: 0.04;
-          "
-        ></div></a
-      ><!--/$--><!--/$--><!--/$-->
-    </div>
     <script data-framer-appear-animation="no-preference"></script>
     <script>
       typeof document < "u" &&
